@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementXml.DAO
 {
-    class Newspaper:ICatalogElement
+    public class Newspaper:ICatalogElement
     {
         public Name Name { get; set; }
         public string PublishingCity { get; set; }
+        public string Publisher { get; set; }
         public DateTime Year { get; set; }
         public int PageCount { get; set; }
         public string Note { get; set; }

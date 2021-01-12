@@ -14,7 +14,7 @@ namespace LibraryManagementXml.DAO
        public  Name() { }
 
     }
-    class Book :ICatalogElement
+    public class Book :ICatalogElement
     {
        public Name Title { get; set; }
        public List<string> Authors{ get; set; }

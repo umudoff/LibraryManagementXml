@@ -76,6 +76,7 @@ namespace LibraryManagementXml.DAO
             {
                 Name = new Name(name, nameRequired),
                 PublishingCity = publisherCity,
+                Publisher= publisher,
                 Year = new DateTime(Convert.ToInt32(year), 1, 1),
                 PageCount = pageCount,
                 Note = note,

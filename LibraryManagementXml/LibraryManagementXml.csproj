@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\Book.cs" />
+    <Compile Include="DAO\CatalogWriter.cs" />
     <Compile Include="DAO\ICatalogElement.cs" />
     <Compile Include="DAO\Newspaper.cs" />
     <Compile Include="DAO\Patent.cs" />

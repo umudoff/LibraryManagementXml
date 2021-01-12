@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementXml.DAO
 {
-    class Patent:ICatalogElement
+    public class Patent:ICatalogElement
     {
         public Name Name { get; set; }
         public List<string> Inventors { get; set; }
