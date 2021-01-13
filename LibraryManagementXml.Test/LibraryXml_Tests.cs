@@ -18,15 +18,15 @@ namespace LibraryManagementXml.Test
 
         [SetUp]
         public void Init()
-        { 
+        {
             path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"..\..\";
-            book = new Book {  Title = new Name("C# in Depth: Fourth Edition",true),
-                                Authors= new List<string>  { "Jon Skeet" } ,
-                                PublisherCity = "New York",
-                                Year= "2019",
-                                PagesCount=528,
-                                Notes= "Effective techniques and experienced insights to C#",
-                                ISBN= "1617294535"
+            book = new Book { Title = new Name("C# in Depth: Fourth Edition", true),
+                Authors = new List<string> { "Jon Skeet" },
+                PublisherCity = "New York",
+                Year = "2019",
+                PagesCount = 528,
+                Notes = "Effective techniques and experienced insights to C#",
+                ISBN = "1617294535"
             };
 
             paper = new Newspaper
@@ -34,7 +34,7 @@ namespace LibraryManagementXml.Test
                 Name = new Name(" The Guardian", true),
                 PublishingCity = "London",
                 Publisher = "The Guardian",
-                Year = new DateTime(Convert.ToInt32(1821), 1, 1),
+                Year = "1821",
                 PageCount = 20,
                 Note = "British daily newspaper",
                 Number = 1,
@@ -60,23 +60,85 @@ namespace LibraryManagementXml.Test
         public void LibraryManagementTest_TestBook()
         {
             var filepath = path + @"TestBook.xml";
-            //IEnumerable<ICatalogElement> bookCatalog= new List<ICatalogElement>() { book};
-           // CatalogWriter.WriteDocument(filepath, bookCatalog);
-            IEnumerable<ICatalogElement> readBookCatalog=  CatalogReader.readFrom(filepath);
-            Book resultBook=null;
-              foreach (var b in readBookCatalog) { 
-                resultBook=(Book)b;
-                Console.WriteLine(b);
-             }
+            IEnumerable<ICatalogElement> bookCatalog = new List<ICatalogElement>() { book };
+            CatalogWriter.WriteDocument(filepath, bookCatalog);
+            IEnumerable<ICatalogElement> readBookCatalog = CatalogReader.readFrom(filepath);
+            Book resultBook = null;
+            foreach (var b in readBookCatalog)
+            {
+                resultBook = (Book)b;
+            }
 
-           Assert.AreEqual(resultBook, book);
-             
+            Assert.AreEqual(resultBook.Title.name, book.Title.name);
+            Assert.AreEqual(resultBook.ISBN, book.ISBN);
 
         }
 
 
+        [Test]
+        public void LibraryManagementTest_TestNewspaper()
+        {
+            var filepath = path + @"TestNewspaper.xml";
+            IEnumerable<ICatalogElement> paperCatalog = new List<ICatalogElement>() { paper };
+            CatalogWriter.WriteDocument(filepath, paperCatalog);
+            IEnumerable<ICatalogElement> readPaperCatalog = CatalogReader.readFrom(filepath);
+            Newspaper result = null;
+            foreach (var p in readPaperCatalog)
+            {
+                result = (Newspaper)p;
+            }
 
+            Assert.AreEqual(result.Name.name, paper.Name.name);
+            Assert.AreEqual(result.ISSN, paper.ISSN);
+        }
 
+        [Test]
+        public void LibraryManagementTest_TestPatent()
+        {
+            var filepath = path + @"TestPatent.xml";
+            IEnumerable<ICatalogElement> patentCatalog = new List<ICatalogElement>() { patent };
+            CatalogWriter.WriteDocument(filepath, patentCatalog);
+            IEnumerable<ICatalogElement> readPatentCatalog = CatalogReader.readFrom(filepath);
+            Patent result = null;
+            foreach (var p in readPatentCatalog)
+            {
+                result = (Patent)p;
+            }
+
+            Assert.AreEqual(result.Name.name, patent.Name.name);
+            Assert.AreEqual(result.RegistrationNumber, patent.RegistrationNumber);
+        }
+
+        [Test]
+         public void LibraryManagementTest_TestAll(){
+            var filepath = path + @"TestCatalog.xml";
+            IEnumerable<ICatalogElement> Catalog = new List<ICatalogElement>() { book, paper, patent };
+            CatalogWriter.WriteDocument(filepath, Catalog);
+            IEnumerable<ICatalogElement> readCatalog = CatalogReader.readFrom(filepath);
+            Book bookResult = null;
+            Newspaper paperResult = null;
+            Patent patentResult = null;
+
+            foreach (var p in Catalog)
+            {
+                if (p is Newspaper)
+                {
+                    paperResult = (Newspaper)p;
+                }
+                if (p is Book)
+                {
+                    bookResult = (Book)p;
+                }
+                if (p is Patent)
+                {
+                    patentResult = (Patent)p;
+                }
+             }
+
+            Assert.AreEqual(patentResult.Name.name, patent.Name.name);
+            Assert.AreEqual(bookResult.ISBN, book.ISBN);
+            Assert.AreEqual(paperResult.ISSN, paper.ISSN);
+        }
 
 
 

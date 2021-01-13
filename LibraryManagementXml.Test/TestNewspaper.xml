@@ -1,1 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<catalog>
+    <newspaper>
+        <name required="true"> The Guardian</name>
+        <publisherCity>London</publisherCity>
+        <publisher>The Guardian</publisher>
+        <year>1821</year>
+        <pageCount>20</pageCount>
+        <note>British daily newspaper</note>
+        <number>1</number>
+        <date>20200105</date>
+        <issn>0261-3077</issn>
+    </newspaper>
+</catalog>

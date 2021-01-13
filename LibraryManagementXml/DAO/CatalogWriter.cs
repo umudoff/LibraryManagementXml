@@ -14,7 +14,12 @@ namespace LibraryManagementXml.DAO
 
         public static void WriteDocument(string FilePath, IEnumerable<ICatalogElement> LibraryCatalog)
         {
-            using (XmlWriter writer = XmlWriter.Create(FilePath))
+            var settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                IndentChars = "    "
+            };
+            using (XmlWriter writer = XmlWriter.Create(FilePath, settings))
             {
                 writer.WriteStartDocument();
                 writer.WriteStartElement("catalog");
@@ -75,8 +80,8 @@ namespace LibraryManagementXml.DAO
             writer.WriteEndElement();
             writer.WriteElementString("publisherCity", paper.PublishingCity);
             writer.WriteElementString("publisher", paper.Publisher);
-            writer.WriteElementString("year", paper.Year.ToString("yyyyMMdd"));
-            writer.WriteElementString("pagesCount", paper.PageCount.ToString());
+            writer.WriteElementString("year", paper.Year);
+            writer.WriteElementString("pageCount", paper.PageCount.ToString());
             writer.WriteElementString("note", paper.Note);
             writer.WriteElementString("number", paper.Number.ToString());
             writer.WriteElementString("date", paper.NewsDate.ToString("yyyyMMdd"));
@@ -111,7 +116,7 @@ namespace LibraryManagementXml.DAO
         public static void WriteElementPatent(XmlWriter writer , Patent patent)
         { 
             var element = new XElement("patent");
-            element.Add(new XElement("name", patent.Name.name));
+            element.Add(new XElement("name", patent.Name.name, new XAttribute("required","true")));             
             element.Add(new XElement("inventors", patent.Inventors.Select(i => new XElement("inventor", i))));
             element.Add(new XElement("country", patent.Country));
             element.Add(new XElement("registrationNumber", patent.RegistrationNumber));

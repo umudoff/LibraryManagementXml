@@ -1,1 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<catalog>
+    <patent>
+        <name required="true">Computer mouse</name>
+        <inventors>
+            <inventor> Lo; Jack</inventor>
+            <inventor>Robinson; Calvin H. A.</inventor>
+        </inventors>
+        <country>US</country>
+        <registrationNumber>EP1374218A1</registrationNumber>
+        <applyDate>19961029</applyDate>
+        <publicationDate>20040102</publicationDate>
+        <pageCount>100</pageCount>
+        <note>An improved mouse computer input device (101) is provided which can easily be controlled</note>
+    </patent>
+</catalog>

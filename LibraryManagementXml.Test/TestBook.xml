@@ -1,1 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8"?><catalog><book><name required="true">C# in Depth: Fourth Edition</name><authors><author>Jon Skeet</author></authors><publisherCity>New York</publisherCity><publisherName /><year>20190101</year><pagesCount>528</pagesCount><notes>Effective techniques and experienced insights to C#</notes><ISBN>1617294535</ISBN></book></catalog>
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<catalog export_time="13:00" libary="National Library">
+  <book>
+    <name required="true">C# in Depth: Fourth Edition</name>
+    <authors>
+      <author>Jon Skeet</author>
+    </authors>
+    <publisherCity>New York</publisherCity>
+    <publisherName>Manning Publications</publisherName>
+    <year>2019</year>
+    <pagesCount>528</pagesCount>
+    <notes>Effective techniques and experienced insights to C#</notes>
+    <ISBN>1617294535</ISBN>
+  </book>
+  <book>
+    <name required="true">Visual Studio 7: A Comprehensive Guide</name>
+    <authors>
+      <author>Galos</author>
+      <author>Mike</author>
+    </authors>
+    <publisherCity>New York</publisherCity>
+    <publisherName>Microsoft Publications</publisherName>
+    <year>2001</year>
+    <pagesCount>400</pagesCount>
+    <notes>Microsoft Visual Studio 7 is explored in depth.</notes>
+    <ISBN>1645294535</ISBN>
+  </book>
+  <newspaper>
+    <name required="true">
+      The Guardian
+    </name>
+    <publisherCity>London</publisherCity>
+    <publisher>The Guardian</publisher>
+    <year>1821</year>
+    <pageCount>20</pageCount>
+    <note>British daily newspaper</note>
+    <number>1</number>
+    <date>20200105</date>
+    <issn>0261-3077</issn>
+  </newspaper>
+  <patent>
+    <name required="true">
+      Computer mouse
+    </name>
+    <inventors>
+      <inventor>
+        Lo; Jack
+      </inventor>
+      <inventor>
+        Robinson; Calvin H. A.
+      </inventor>
+    </inventors>
+    <country>US</country>
+    <registrationNumber>EP1374218A1</registrationNumber>
+    <applyDate>19961029</applyDate>
+    <publicationDate>20040102</publicationDate>
+    <pageCount>100 </pageCount>
+    <note>An improved mouse computer input device (101) is provided which can easily be controlled by both the small hands of children and the larger hands of adults</note>
+  </patent>
+</catalog>
+
+
+

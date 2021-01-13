@@ -11,7 +11,7 @@ namespace LibraryManagementXml.DAO
         public Name Name { get; set; }
         public string PublishingCity { get; set; }
         public string Publisher { get; set; }
-        public DateTime Year { get; set; }
+        public string Year { get; set; }
         public int PageCount { get; set; }
         public string Note { get; set; }
         public int Number { get; set; }
