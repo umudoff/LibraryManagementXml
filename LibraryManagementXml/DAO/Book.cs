@@ -20,7 +20,7 @@ namespace LibraryManagementXml.DAO
        public List<string> Authors{ get; set; }
        public string PublisherCity { get; set; }
        public string PublisherName { get; set; }
-       public DateTime Year { get; set; }
+       public string Year { get; set; }
        public int PagesCount { get; set; }
        public string Notes { get; set; }
        public string ISBN { get; set; }

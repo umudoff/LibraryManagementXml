@@ -15,12 +15,12 @@
   <book>
     <name required="true">Visual Studio 7: A Comprehensive Guide</name>
     <authors>
-    <author>Galos</author>
+      <author>Galos</author>
       <author>Mike</author>
     </authors>
     <publisherCity>New York</publisherCity>
     <publisherName>Microsoft Publications</publisherName>
-     <year>2001</year>
+    <year>2001</year>
     <pagesCount>400</pagesCount>
     <notes>Microsoft Visual Studio 7 is explored in depth.</notes>
     <ISBN>1645294535</ISBN>

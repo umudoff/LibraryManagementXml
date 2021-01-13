@@ -48,7 +48,7 @@
     <Compile Include="DAO\ICatalogElement.cs" />
     <Compile Include="DAO\Newspaper.cs" />
     <Compile Include="DAO\Patent.cs" />
-    <Compile Include="DAO\PopulateCatalog.cs" />
+    <Compile Include="DAO\CatalogReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

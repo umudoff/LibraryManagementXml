@@ -4,12 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace LibraryManagementXml.DAO
 {
     public class CatalogWriter
     {
-        public static void WriteBook(XmlWriter writer, Book book)
+       
+
+        public static void WriteDocument(string FilePath, IEnumerable<ICatalogElement> LibraryCatalog)
+        {
+            using (XmlWriter writer = XmlWriter.Create(FilePath))
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("catalog");
+
+
+                foreach (var c in LibraryCatalog)
+                {
+                    CatalogWriter.Write(writer, c);
+                }
+
+                writer.WriteEndDocument();
+
+            }
+        }
+        public static void Write(XmlWriter writer, ICatalogElement catalogElement)
+        {
+            if (catalogElement is Book)
+            {
+                WriteBook(writer,(Book)catalogElement);
+            }
+            if (catalogElement is Newspaper)
+            {
+                WriteNewspaper(writer,(Newspaper)catalogElement);
+            }
+            if (catalogElement is Patent)
+            {
+                WriteElementPatent(writer,(Patent)catalogElement);
+            }
+        }
+        private static void WriteBook(XmlWriter writer, Book book)
         {
             writer.WriteStartElement("book");
             writer.WriteStartElement("name");
@@ -24,14 +59,14 @@ namespace LibraryManagementXml.DAO
             writer.WriteEndElement();
             writer.WriteElementString("publisherCity", book.PublisherCity);
             writer.WriteElementString("publisherName", book.PublisherName);
-            writer.WriteElementString("year", book.Year.ToString("yyyyMMdd"));
+            writer.WriteElementString("year", book.Year);
             writer.WriteElementString("pagesCount", book.PagesCount.ToString());
             writer.WriteElementString("notes", book.Notes);
             writer.WriteElementString("ISBN", book.ISBN);
             writer.WriteEndElement();
         }
 
-        public static void WriteNewspaper(XmlWriter writer, Newspaper paper)
+        private static void WriteNewspaper(XmlWriter writer, Newspaper paper)
         {
             writer.WriteStartElement("newspaper");
             writer.WriteStartElement("name");
@@ -50,7 +85,7 @@ namespace LibraryManagementXml.DAO
         }
 
 
-        public static void WritePatent(XmlWriter writer, Patent patent)
+        private static void WritePatent(XmlWriter writer, Patent patent)
         {
             writer.WriteStartElement("patent");
             writer.WriteStartElement("name");
@@ -71,6 +106,20 @@ namespace LibraryManagementXml.DAO
             writer.WriteElementString("note", patent.Note);
             writer.WriteEndElement();
 
+        }
+
+        public static void WriteElementPatent(XmlWriter writer , Patent patent)
+        { 
+            var element = new XElement("patent");
+            element.Add(new XElement("name", patent.Name.name));
+            element.Add(new XElement("inventors", patent.Inventors.Select(i => new XElement("inventor", i))));
+            element.Add(new XElement("country", patent.Country));
+            element.Add(new XElement("registrationNumber", patent.RegistrationNumber));
+            element.Add(new XElement("applyDate", patent.ApplyDate.ToString("yyyyMMdd")));
+            element.Add(new XElement("publicationDate", patent.PublicationDate.ToString("yyyyMMdd")));
+            element.Add(new XElement("pageCount", patent.PageCount.ToString()));
+            element.Add(new XElement("note", patent.Note));
+            element.WriteTo(writer);
         }
 
     }

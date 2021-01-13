@@ -5,27 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace LibraryManagementXml.DAO
 {
-    public class PopulateCatalog
+    public class CatalogReader
     {
 
-        public static ICatalogElement PopulateBook(XmlReader reader)
+        private static ICatalogElement PopulateBook(XmlReader reader)
         {
             reader.ReadToFollowing("name");
             var nameRequired = reader.GetAttribute("required");
             var name = reader.ReadElementContentAsString();
             List<string> authors = new List<string>();
             reader.ReadToFollowing("authors");
-
-            using (var innerReader = reader.ReadSubtree())
-            {
-                while (innerReader.ReadToFollowing("author"))
+                using (var innerReader = reader.ReadSubtree())
                 {
-                    authors.Add(innerReader.ReadElementContentAsString());
-                }
-            }
+                    while (innerReader.ReadToFollowing("author"))
+                    {
+                        authors.Add(innerReader.ReadElementContentAsString());
+                    }
+                } 
             reader.ReadToFollowing("publisherCity");
             var publisherCity = reader.ReadElementContentAsString();
             reader.ReadToFollowing("year");
@@ -36,12 +36,12 @@ namespace LibraryManagementXml.DAO
             var notes = reader.ReadElementContentAsString();
             reader.ReadToFollowing("ISBN");
             string isbn = reader.ReadElementContentAsString();
-           return new Book
+            return new Book
             {
                 Title = new Name(name, bool.Parse(nameRequired)),
                 Authors = authors,
                 PublisherCity = publisherCity,
-                Year = new DateTime(Convert.ToInt32(year), 1, 1),
+                Year = year,
                 PagesCount = pageCount,
                 Notes = notes,
                 ISBN = isbn
@@ -50,7 +50,7 @@ namespace LibraryManagementXml.DAO
         }
 
 
-        public static ICatalogElement PopulateNewspaper(XmlReader reader)
+        private static ICatalogElement PopulateNewspaper(XmlReader reader)
         {
             reader.ReadToFollowing("name");
             var nameRequired = bool.Parse(reader.GetAttribute("required"));
@@ -76,7 +76,7 @@ namespace LibraryManagementXml.DAO
             {
                 Name = new Name(name, nameRequired),
                 PublishingCity = publisherCity,
-                Publisher= publisher,
+                Publisher = publisher,
                 Year = new DateTime(Convert.ToInt32(year), 1, 1),
                 PageCount = pageCount,
                 Note = note,
@@ -89,7 +89,7 @@ namespace LibraryManagementXml.DAO
         }
 
 
-        public static ICatalogElement PopulatePatent(XmlReader reader)
+        private static ICatalogElement PopulatePatent(XmlReader reader)
         {
             reader.ReadToFollowing("name");
             var nameRequired = bool.Parse(reader.GetAttribute("required"));
@@ -130,25 +130,56 @@ namespace LibraryManagementXml.DAO
 
         }
 
-       
+
+        private static ICatalogElement readPatent(XmlReader reader)
+        {
+            var patentElement = XNode.ReadFrom(reader) as XElement;
+            var name = patentElement.Element("name").Value;
+            bool requiredName = bool.Parse(patentElement.Element("name").Attribute("required").Value);
+            List<string> inventors = patentElement.Element("inventors").Elements("inventor").Select(x => x.Value).ToList();
+            var country = patentElement.Element("country").Value;
+            var registrationNumber = patentElement.Element("registrationNumber").Value;
+            DateTime applyDate = DateTime.ParseExact(patentElement.Element("applyDate").Value, "yyyyMMdd", CultureInfo.InvariantCulture);
+            DateTime publicationDate = DateTime.ParseExact(patentElement.Element("publicationDate").Value, "yyyyMMdd", CultureInfo.InvariantCulture);
+            var pageCount = int.Parse(patentElement.Element("pageCount").Value);
+            var note = patentElement.Element("note").Value;
+
+            return new Patent
+            {
+                Name = new Name(name, requiredName),
+                Inventors = inventors,
+                Country = country,
+                RegistrationNumber = registrationNumber,
+                ApplyDate = applyDate,
+                PublicationDate = publicationDate,
+                PageCount = pageCount,
+                Note = note
+            };
+
+        }
+
+
         public static IEnumerable<ICatalogElement> readFrom(string input)
         {
+
             var reader = XmlReader.Create(input);
+            reader.ReadToFollowing("catalog");
+            reader.ReadStartElement();
             while (reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "book")
                 {
-                    yield return PopulateCatalog.PopulateBook(reader);
+                    yield return CatalogReader.PopulateBook(reader);
                 }
 
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "newspaper")
                 {
-                    yield return PopulateCatalog.PopulateNewspaper(reader);
+                    yield return CatalogReader.PopulateNewspaper(reader);
                 }
 
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "patent")
                 {
-                   yield return PopulateCatalog.PopulatePatent(reader);
+                    yield return CatalogReader.readPatent(reader);
                 }
 
 
@@ -157,7 +188,7 @@ namespace LibraryManagementXml.DAO
         }
     }
 
-         
 
 
- }
+
+}
